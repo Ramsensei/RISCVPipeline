@@ -1,9 +1,9 @@
 `include "./components/Alu.sv"
-module EXPipe(data1, data2, Imm, Fw1, Fw2, Fw3, SelFwA, SelFwB, FwWD, SelFwWD, ALUScr, ALUControl, ALUResult, WriteData);
+module EXPipe(data1, data2, Imm, Fw1, Fw2, Fw3, SelFwA, SelFwB, ALUScr, ALUControl, ALUResult, WriteData);
 
-    input wire [63:0] data1, data2, Imm, Fw1, Fw2, Fw3, FwWD;
+    input wire [63:0] data1, data2, Imm, Fw1, Fw2, Fw3;
     input wire [1:0] SelFwA, SelFwB;
-    input wire ALUScr, ALUControl, SelFwWD;
+    input wire ALUScr, ALUControl;
     output reg [63:0] ALUResult;
     output reg [63:0] WriteData;
 
@@ -11,7 +11,6 @@ module EXPipe(data1, data2, Imm, Fw1, Fw2, Fw3, SelFwA, SelFwB, FwWD, SelFwWD, A
     reg [63:0] FwAData [3:0];
     reg [63:0] FwBData [3:0];
     reg [63:0] ScrData [1:0];
-    reg [63:0] FwWDData [1:0];
 
     assign FwAData[0] = data1;
     assign FwAData[1] = Fw1;
@@ -36,10 +35,7 @@ module EXPipe(data1, data2, Imm, Fw1, Fw2, Fw3, SelFwA, SelFwB, FwWD, SelFwWD, A
         .b(ALUIn2),
         .control(ALUControl),
         .result(ALUResult));
-    
-    assign FwWDData[0] = data2;
-    assign FwWDData[1] = FwWD;
-    
-    Mux #(2, 64) FwWDMux(.Data_arr(FwWDData), .selector(SelFwWD), .Out(WriteData));
+
+    assign WriteData = FwBOut;
 
 endmodule
