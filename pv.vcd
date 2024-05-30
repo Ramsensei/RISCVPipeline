@@ -1,0 +1,111 @@
+$date
+	Thu May 30 14:02:35 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb_IF_IDReg $end
+$var wire 12 ! ID_PC [11:0] $end
+$var wire 32 " ID_Instruction [31:0] $end
+$var reg 32 # IF_Instruction [31:0] $end
+$var reg 12 $ IF_PC [11:0] $end
+$var reg 1 % clk $end
+$scope module dut $end
+$var wire 32 & IF_Instruction [31:0] $end
+$var wire 12 ' IF_PC [11:0] $end
+$var wire 1 % clk $end
+$var reg 32 ( ID_Instruction [31:0] $end
+$var reg 12 ) ID_PC [11:0] $end
+$var reg 32 * Instruction [31:0] $end
+$var reg 12 + PC [11:0] $end
+$var reg 1 , innerClk $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+0,
+bx +
+bx *
+bx )
+bx (
+b0 '
+b0 &
+1%
+b0 $
+b0 #
+bx "
+bx !
+$end
+#5
+0%
+#9
+b0 *
+b0 +
+1,
+#10
+b0 "
+b0 (
+b0 !
+b0 )
+1%
+b100 #
+b100 &
+b100 $
+b100 '
+#11
+0,
+#15
+0%
+#19
+b100 *
+b100 +
+1,
+#20
+b100 "
+b100 (
+b100 !
+b100 )
+1%
+b1000 #
+b1000 &
+b1000 $
+b1000 '
+#21
+0,
+#25
+0%
+#29
+b1000 *
+b1000 +
+1,
+#30
+b1000 "
+b1000 (
+b1000 !
+b1000 )
+1%
+b1100 #
+b1100 &
+b1100 $
+b1100 '
+#31
+0,
+#35
+0%
+#39
+b1100 *
+b1100 +
+1,
+#40
+b1100 "
+b1100 (
+b1100 !
+b1100 )
+1%
