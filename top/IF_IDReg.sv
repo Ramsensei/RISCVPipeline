@@ -1,6 +1,7 @@
-module IF_IDReg(clk, IF_PC, IF_Instruction, ID_PC, ID_Instruction);
+module IF_IDReg(clk, writeEn, IF_PC, IF_Instruction, ID_PC, ID_Instruction);
     input wire [11:0] IF_PC;
     input wire [31:0] IF_Instruction;
+    input wire writeEn;
     output reg [11:0] ID_PC;
     output reg [31:0] ID_Instruction;
     input wire clk;
@@ -10,8 +11,10 @@ module IF_IDReg(clk, IF_PC, IF_Instruction, ID_PC, ID_Instruction);
     reg [31:0] Instruction;
 
     always_ff @(posedge innerClk) begin
-        PC <= IF_PC;
-        Instruction <= IF_Instruction;
+        if (!writeEn) begin
+            PC <= IF_PC;
+            Instruction <= IF_Instruction;
+        end
     end
 
     always_ff @(posedge clk) begin

@@ -1,4 +1,4 @@
-module Fordwarding_Unit(rs1, rs2, MEM_rd, WB_rd, RegWrite, MemToReg, FwASel, FwBSel);
+module Fordwarding_Unit(rs1, rs2, MEM_rd, WB_rd, MEM_RegWrite, WB_RegWrite, MemToReg, FwASel, FwBSel);
 
     input wire [4:0] rs1, rs2, MEM_rd, WB_rd;
     input wire MEM_RegWrite, WB_RegWrite, MemToReg;
