@@ -1,4 +1,4 @@
-module EX_MEMReg(clk, MEM_MemData, MEM_ALUResult, MEM_rd, MEM_MemToReg, MEM_RegWrite,
+module MEM_WBReg(clk, MEM_MemData, MEM_ALUResult, MEM_rd, MEM_MemToReg, MEM_RegWrite,
                     WB_MemData, WB_ALUResult, WB_rd, WB_MemToReg, WB_RegWrite);
 
     input wire clk;

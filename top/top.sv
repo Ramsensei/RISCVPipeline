@@ -1,3 +1,6 @@
+`define TOP
+`include "./components/Mux.sv"
+`include "./components/Adder.sv"
 `include "./top/Controller.sv"
 `include "./top/IFPipe.sv"
 `include "./top/IDPipe.sv"
@@ -9,17 +12,14 @@
 `include "./top/EX_MEMReg.sv"
 `include "./top/MEM_WBReg.sv"
 `include "./components/HazardUnit.sv"
-`include "./components/ForwardingUnit.sv"
-`define TOP
-`include "./components/Mux.sv"
-`include "./components/Adder.sv"
+`include "./components/Fordwarding_Unit.sv"
 
 module top(clk, rst);
 
     input clk;
     input rst;
 
-    reg Branch
+    reg Branch, CtrBranch;
     wire [11:0] BranchAddr, IF_PC;
     wire PCWrite, IF_IDWrite, Flush;
     wire [31:0] IF_Instruction;
@@ -56,6 +56,9 @@ module top(clk, rst);
     IDPipe IDPipe(.clk(clk), .writeAddr(WB_rd), .writeData(WB_data), .Instruction(ID_Instruction), .PC(ID_PC), .RegWrite(WB_RegWrite),
                     .BranchAddr(BranchAddr), .Equal(ID_Equal), .data1(ID_data1), .data2(ID_data2), .Imm(ID_Imm), .rd(ID_rd), .rs1(ID_rs1), .rs2(ID_rs2));
     
+    Controller Controller(.Instruction(ID_Instruction), .ALUControl(ID_ALUControl), .RegWrite(ID_RegWrite), .MemWrite(ID_MemWrite), .Branch(CtrBranch), .MemToReg(ID_MemToReg), .ALUScr(ID_ALUScr));
+    assign Branch = CtrBranch && ID_Equal;
+
 
     ID_EXReg ID_EXReg(.clk(clk), .ID_data1(ID_data1), .ID_data2(ID_data2), .ID_Imm(ID_Imm),
                     .ID_rd(ID_rd), .ID_rs1(ID_rs1), .ID_rs2(ID_rs2), .ID_ALUControl(ID_ALUControl),
@@ -71,7 +74,7 @@ module top(clk, rst);
                         .MEM_ALUResult(MEM_ALUResult), .MEM_WriteData(MEM_WriteData), .MEM_rd(MEM_rd), .MEM_RegWrite(MEM_RegWrite), .MEM_MemToReg(MEM_MemToReg), .MEM_MemWrite(MEM_MemWrite));
 
 
-    ForwardUnit ForwardUnit(.rs1(EX_rs1), .rs2(EX_rs2), .MEM_rd(MEM_rd), .WB_rd(WB_rd), .MEM_RegWrite(MEM_RegWrite), .WB_RegWrite(WB_RegWrite), .MemToReg(MEM_MemToReg), .FwASel(SelFwA), .FwBSel(SelFwB));
+    Fordwarding_Unit ForwardUnit(.rs1(EX_rs1), .rs2(EX_rs2), .MEM_rd(MEM_rd), .WB_rd(WB_rd), .MEM_RegWrite(MEM_RegWrite), .WB_RegWrite(WB_RegWrite), .MemToReg(MEM_MemToReg), .FwASel(SelFwA), .FwBSel(SelFwB));
 
     MEMPipe MEMPipe(.clk(clk), .ALUResult(MEM_ALUResult), .WriteData(MEM_WriteData), .MemWrite(MEM_MemWrite), .MemData(MEM_MemData));
 

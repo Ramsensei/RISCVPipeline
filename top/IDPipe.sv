@@ -10,6 +10,8 @@ module IDPipe (clk, writeAddr, writeData, Instruction, PC, RegWrite, BranchAddr,
     input wire [31:0] Instruction;
     input wire [11:0] PC;
     input wire RegWrite, clk;
+    input wire [4:0] writeAddr;
+    input wire [63:0] writeData;
     output reg [11:0] BranchAddr;
     output reg Equal;
     output reg [63:0] data1, data2;
@@ -28,12 +30,11 @@ module IDPipe (clk, writeAddr, writeData, Instruction, PC, RegWrite, BranchAddr,
         .data(Imm),
         .out(ShiftedImm));
 
-    Adder BAdder (
+    Adder #(12) BAdder (
         .a(PC),
-        .b(ShiftedImm),
+        .b(ShiftedImm[11:0]),
         .sum(BranchAddr),
-        .cin(1'b0)
-        .cout());
+        .cin(1'b0));
 
     assign rd = Instruction[11:7];
     assign rs1 = Instruction[19:15];

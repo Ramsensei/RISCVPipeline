@@ -3,7 +3,8 @@ module EXPipe(data1, data2, Imm, Fw1, Fw2, Fw3, SelFwA, SelFwB, ALUScr, ALUContr
 
     input wire [63:0] data1, data2, Imm, Fw1, Fw2, Fw3;
     input wire [1:0] SelFwA, SelFwB;
-    input wire ALUScr, ALUControl;
+    input wire ALUScr;
+    input wire [1:0] ALUControl;
     output reg [63:0] ALUResult;
     output reg [63:0] WriteData;
 
@@ -29,12 +30,7 @@ module EXPipe(data1, data2, Imm, Fw1, Fw2, Fw3, SelFwA, SelFwB, ALUScr, ALUContr
     assign ScrData[1] = Imm;
 
     Mux #(2, 64) ScrMux(.Data_arr(ScrData), .selector(ALUScr), .Out(ALUIn2));
-
-    Alu alu(
-        .a(ALUIn1),
-        .b(ALUIn2),
-        .control(ALUControl),
-        .result(ALUResult));
+    Alu alu(.SrcA(ALUIn1), .SrcB(ALUIn2), .ALUControl(ALUControl), .ALUResult(ALUResult));
 
     assign WriteData = FwBOut;
 
